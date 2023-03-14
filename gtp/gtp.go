@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 
 	"github.com/869413421/wechatbot/config"
 )
@@ -122,7 +123,20 @@ func Completions(msg string) (string, error) {
 	apiKey := config.LoadConfig().ApiKey
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+apiKey)
-	client := &http.Client{}
+	// client := &http.Client{}
+
+	// 创建代理 URL，代理地址为 proxyAddress
+	proxyUrl, err := url.Parse("https://code-server-production-c55d.up.railway.app:8080")
+	if err != nil {
+		panic(err)
+	}
+
+	// 创建 Transport 对象并设置代理
+	transport := &http.Transport{Proxy: http.ProxyURL(proxyUrl)}
+
+	// 创建 Client 对象并设置 Transport
+	client := &http.Client{Transport: transport}
+
 	response, err := client.Do(req)
 	if err != nil {
 		return "", err
