@@ -77,6 +77,19 @@ type Error struct {
 //-d '{"model": "text-davinci-003", "prompt": "give me good song", "temperature": 0, "max_tokens": 7}'
 func Completions(msg string) (string, error) {
 
+	// 解释下这个请求参数
+	// model: 模型类型
+	// messages: 会话历史
+	// temperature: 生成文本的温度，值越大，生成的文本越多样化，但是也越不自然，值越小，生成的文本越自然，但是也越不多样化
+	// top_p: 生成文本的多样性，值越大，生成的文本越多样化，但是也越不自然，值越小，生成的文本越自然，但是也越不多样化
+	// n: 生成文本的数量
+	// stream: 是否流式返回
+	// stop: 生成文本的停止条件
+	// max_tokens: 生成文本的最大长度
+	// presence_penalty: 生成文本的多样性，值越大，生成的文本越多样化，但是也越不自然，值越小，生成的文本越自然，但是也越不多样化
+	// frequency_penalty: 生成文本的多样性，值越大，生成的文本越多样化，但是也越不自然，值越小，生成的文本越自然，但是也越不多样化
+	// logit_bias: 生成文本的多样性，值越大，生成的文本越多样化，但是也越不自然，值越小，生成的文本越自然，但是也越不多样化
+	// user: 用户id
 	request := &Request{
 		Model: ModelGpt35Turbo,
 		Messages: []*Message{
@@ -90,7 +103,7 @@ func Completions(msg string) (string, error) {
 		N:                1,
 		Stream:           false,
 		Stop:             []string{"\r"},
-		MaxTokens:        4096,
+		MaxTokens:        2048,
 		PresencePenalty:  0,
 		FrequencyPenalty: 0,
 	}
